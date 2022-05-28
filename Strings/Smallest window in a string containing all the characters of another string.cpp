@@ -18,29 +18,31 @@ string smallestWindow (string s, string p)
 {
     int n= s.size();
     int m = p.size();
-    int st=0,en=0,ct= m;
+    if(m>n){return "";}
+    int st=0,en=0;
     int mn= INT_MAX;
     int i=INT_MAX,j=0;
     unordered_map<char,int> um;
     for(int i=0;i<m;i++){
         um[p[i]]++;
     }
+    int ct= um.size();
     while(st<=en && en<n){
         if(ct==0){
-            while(ct==0 && st<en && st<n){
+            while(ct==0 && st<=en){
                 if(en-st+1< mn){mn= en-st+1;i=st;j=en;}
-                if(en-st+1==mn){
+                else{
+                    if(en-st+1==mn){
                     if(i>st){
                         i=st;j=en;
                     }
                 }
+                }
                 if(um.find(s[st])!=um.end()){
-                    if(um[s[st]]<0){
-                        um[s[st]]++;
-                    }
-                    else{
-                        um[s[st]]++;
+                    um[s[st]]++;
+                    if(um[s[st]]==1){
                         ct++;
+                        en++;
                     }
                 }
                 st++;
@@ -49,10 +51,10 @@ string smallestWindow (string s, string p)
         }
         else{
             if(um.find(s[en])!=um.end()){
-                if(um[s[en]]>0){
+                um[s[en]]--;
+                if(um[s[en]]==0){
                     ct--;
                 }
-                um[s[en]]--;
             }
             if(ct>0){
                 en++;
@@ -60,11 +62,12 @@ string smallestWindow (string s, string p)
         }
     }
     if(mn==INT_MAX){
-        return "-1";
+        return "";
     }
     return s.substr(i,j-i+1);
 }
 
+// Geeks for geeks solution nice sol look at it once.
 string Minimum_Window(string s, string t)
 {
  
