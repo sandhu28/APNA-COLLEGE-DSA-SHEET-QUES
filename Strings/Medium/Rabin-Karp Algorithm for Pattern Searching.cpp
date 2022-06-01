@@ -31,46 +31,49 @@ int iter_pow(int a, int b, int m)
     return ans;
 }
 
-void prt_indices(string s, string ptr)
+vector<int> prt_indices(string s, string ptr)
 {
     int mod = 1e9 + 7;
     int hp = 0;
     int hs = 0;
     int n = s.size();
     int p = ptr.size();
+    // c(p);
+    vector<int> ans;
     for (int i = 0; i < p; i++)
     {
-        hp = (hp * 1LL + ((ptr[i] - 'a') * 1LL * (iter_pow(26, p - 1 - i, mod))) % mod) % mod;
+        hp = ((hp * 1LL) + (((ptr[i] - 'a' + mod)%mod) * 1LL * (iter_pow(10, p - 1 - i, mod))) % mod) % mod;
     }
+    // c(hp);
     for (int i = 0; i < p; i++)
     {
-        hs = ((hs * 1LL) + ((s[i] - 'a') * 1LL * (iter_pow(26, p - 1 - i, mod))) % mod) % mod;
+        hs = ((hs * 1LL) + (((s[i] - 'a' + mod)%mod) * 1LL * (iter_pow(10, p - 1 - i, mod))) % mod) % mod;
     }
-    bool t = true;
+    // c(hs);
+    int t=0;
     if (hs == hp)
     {
         for (int i = 0; i < p; i++)
         {
-            if (ptr[i] != s[i])
+            if (ptr[i] == s[i])
             {
-                t = false;
-                break;
+                t++;
             }
         }
     }
-    for(int i=p;i<n;i++){
-        hs = ((((hs-(iter_pow(26,s[i-p]-'a',mod)) + mod)%mod)*1LL*26) + ((s[i]-'a')))%mod;
-        if(hs==hp){
-            for (int j = 0; j < p; j++)
+    if(t==p){ans.push_back(0);}
+    for (int i = p; i < n; i++)
+    {
+        hs = ((((hs - ((s[i - p] - 'a') * 1LL * iter_pow(10, p - 1, mod)) + mod) % mod) * 1LL * 10) + ((s[i] - 'a'))) % mod;
+        // cout<<i<<" "<<(hs);nl;
+        if (hs == hp)
         {
-            if (ptr[i] != s[i])
-            {
-                t = false;
-                break;
+            if(s.substr(i-p+1,p)== ptr){
+                ans.push_back(i-p+1);
             }
         }
-        }
     }
+    return ans;
 }
 
 int main()
@@ -80,5 +83,10 @@ int main()
     cin >> s;
     string p;
     cin >> p;
+    auto ans= prt_indices(s,p);
+    for(auto& e: ans){
+        z(e);
+    }
+    // c(iter_pow(26,8,1e9+7));
     return 0;
 }
