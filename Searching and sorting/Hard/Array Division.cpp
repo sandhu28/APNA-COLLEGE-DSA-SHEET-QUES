@@ -16,6 +16,17 @@
 #define INF INT_MAX
 using namespace std;
 
+bool check(vi& v,lli mid, int k){
+    lli noOfBlocks=1;
+    int n= v.size(); lli sm=0;
+    for(int i=0;i<n;i++){
+        sm+= v[i];
+        if(sm>mid){noOfBlocks++;sm= v[i];}
+            
+    }
+    return noOfBlocks<=k;
+}
+
 int main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
@@ -26,5 +37,19 @@ int main(){
     {
         cin >> v[i];
     }
+    lli l=*max_element(v.begin(),v.end());
+    lli h= 1e18+10;
+    lli ans=0;
+    while(l<=h){
+        lli mid= l + (h-l)/2;
+        if(check(v,mid,k)){
+            ans= mid;
+            h= mid-1;
+        }
+        else{
+            l= mid+1;
+        }
+    }
+    c(ans);
     return 0;
 }
