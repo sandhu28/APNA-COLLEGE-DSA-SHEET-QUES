@@ -19,22 +19,25 @@ using namespace std;
 int main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
-    int n;cin>>n;
-    vi v(n);
+    int n,x;cin>>n>>x;
+    vector<int> v(n);
     for(int i=0;i<n;i++){
         cin>>v[i];
     }
-    sort(v.begin(),v.end());
-    lli toCheckFor=1;
-    for(int i=0;i<n;i++){
-        if(v[i]<= toCheckFor){
-            toCheckFor += v[i];
-        }
-        else{
-            break;
-        }
+    map<lli,lli> m;
+    m.insert({0,1});
+    vector<lli> prefix(n,0);
+    prefix[0]= v[0];
+    for(int i=1;i<n;i++){
+        prefix[i]= prefix[i-1] + v[i];
     }
-    cout<<toCheckFor<<endl;
-
+    lli totSubarrays=0;
+    for(int i=0;i<n;i++){
+        if(m.find(prefix[i]-x)!=m.end()){
+            totSubarrays+= m[prefix[i]-x];
+        }
+        m[prefix[i]]++;
+    }
+    c(totSubarrays);
     return 0;
 }

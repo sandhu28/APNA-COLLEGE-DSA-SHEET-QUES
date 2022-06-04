@@ -19,22 +19,22 @@ using namespace std;
 int main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
-    int n;cin>>n;
-    vi v(n);
+    int x,n;cin>>x>>n;
+    // vector<int> v(n);
+    multiset<int> ms;
+    set<int> s;
+    s.insert(0);s.insert(x);ms.insert(x-0);
     for(int i=0;i<n;i++){
-        cin>>v[i];
+        int k;cin>>k;
+        s.insert(k);
+        auto it = s.find(k);
+        int pr= *prev(it);
+        int nx= *next(it);
+        ms.erase(ms.find(nx-pr));
+        ms.insert(k-pr);
+        ms.insert(nx-k);
+        z(*ms.rbegin());
     }
-    sort(v.begin(),v.end());
-    lli toCheckFor=1;
-    for(int i=0;i<n;i++){
-        if(v[i]<= toCheckFor){
-            toCheckFor += v[i];
-        }
-        else{
-            break;
-        }
-    }
-    cout<<toCheckFor<<endl;
 
     return 0;
 }

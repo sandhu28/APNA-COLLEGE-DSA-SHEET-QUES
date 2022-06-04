@@ -16,7 +16,9 @@
 #define INF INT_MAX
 using namespace std;
 
+
 int main(){
+    
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int n;cin>>n;
@@ -24,17 +26,17 @@ int main(){
     for(int i=0;i<n;i++){
         cin>>v[i];
     }
-    sort(v.begin(),v.end());
-    lli toCheckFor=1;
+    int pos[n+1]= {};
     for(int i=0;i<n;i++){
-        if(v[i]<= toCheckFor){
-            toCheckFor += v[i];
-        }
-        else{
-            break;
+        pos[v[i]] = i;
+    }
+    int ct=1;
+    for(int i=2;i<=n;i++){
+        if(pos[i]< pos[i-1]){
+            ct++;
         }
     }
-    cout<<toCheckFor<<endl;
+    c(ct);
 
     return 0;
 }

@@ -20,21 +20,18 @@ int main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int n;cin>>n;
-    vi v(n);
+    vector<pii> v(n);
     for(int i=0;i<n;i++){
-        cin>>v[i];
+        int x,y;cin>>x>>y;
+        v[i] = {x,y};
     }
     sort(v.begin(),v.end());
-    lli toCheckFor=1;
+    lli sm=0;
+    lli ans=0;
     for(int i=0;i<n;i++){
-        if(v[i]<= toCheckFor){
-            toCheckFor += v[i];
-        }
-        else{
-            break;
-        }
+        sm+= v[i].first;
+        ans += (v[i].second - sm);
     }
-    cout<<toCheckFor<<endl;
-
+    c(ans);
     return 0;
 }

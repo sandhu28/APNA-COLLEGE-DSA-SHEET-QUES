@@ -20,21 +20,14 @@ int main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int n;cin>>n;
-    vi v(n);
+    vector<int> v(n);
+    lli sm=0;
     for(int i=0;i<n;i++){
         cin>>v[i];
+        sm+= v[i];
     }
     sort(v.begin(),v.end());
-    lli toCheckFor=1;
-    for(int i=0;i<n;i++){
-        if(v[i]<= toCheckFor){
-            toCheckFor += v[i];
-        }
-        else{
-            break;
-        }
-    }
-    cout<<toCheckFor<<endl;
+    cout<<(max(sm, 2*1LL*v[n-1]));
 
     return 0;
 }

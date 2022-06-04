@@ -20,21 +20,25 @@ int main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int n;cin>>n;
-    vi v(n);
+    vector<int> v(n);
     for(int i=0;i<n;i++){
         cin>>v[i];
     }
-    sort(v.begin(),v.end());
-    lli toCheckFor=1;
+    multiset<int> ms;
     for(int i=0;i<n;i++){
-        if(v[i]<= toCheckFor){
-            toCheckFor += v[i];
+        if(ms.empty()){
+            ms.insert(v[i]);
+        }
+        else if(ms.upper_bound(v[i])!=ms.end()){
+            auto it= ms.upper_bound(v[i]);
+            ms.erase(it);
+            ms.insert(v[i]);
         }
         else{
-            break;
+            ms.insert(v[i]);
         }
     }
-    cout<<toCheckFor<<endl;
+    c(ms.size());
 
     return 0;
 }

@@ -16,25 +16,40 @@
 #define INF INT_MAX
 using namespace std;
 
+
 int main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int n;cin>>n;
-    vi v(n);
+    vector<int> children(n);
     for(int i=0;i<n;i++){
-        cin>>v[i];
+        children[i]= i+1;
     }
-    sort(v.begin(),v.end());
-    lli toCheckFor=1;
-    for(int i=0;i<n;i++){
-        if(v[i]<= toCheckFor){
-            toCheckFor += v[i];
+    while(children.size()>1){
+        vector<int> survived;
+        int sz= children.size();
+        for(int i=0;i<children.size();i++){
+            if(i&1){
+                z(children[i]);
+            }
+            else{
+                survived.push_back(children[i]);
+            }
+        }
+        if(!(sz&1)){
+            children= survived;
         }
         else{
-            break;
+            children.clear();
+            children.push_back(survived.back());
+            survived.pop_back();
+            for(auto &e: survived){
+                children.push_back(e);
+            }
         }
-    }
-    cout<<toCheckFor<<endl;
 
+    }
+    z(children[0]);
+    
     return 0;
 }

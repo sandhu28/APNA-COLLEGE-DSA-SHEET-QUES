@@ -20,21 +20,27 @@ int main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int n;cin>>n;
-    vi v(n);
+    vector<int> v(n);
     for(int i=0;i<n;i++){
         cin>>v[i];
     }
-    sort(v.begin(),v.end());
-    lli toCheckFor=1;
-    for(int i=0;i<n;i++){
-        if(v[i]<= toCheckFor){
-            toCheckFor += v[i];
-        }
-        else{
-            break;
-        }
+    vector<lli> prefix(n,0);
+    prefix[0]= v[0];
+    for(int i=1;i<n;i++){
+        prefix[i]= prefix[i-1] + v[i];
     }
-    cout<<toCheckFor<<endl;
-
+    for(int i=0;i<n;i++){
+        prefix[i] = (prefix[i]%n + n)%n;
+    }
+    map<lli,lli> m;
+    m.insert({0,1});
+    lli ans=0;
+    for(int i=0;i<n;i++){
+        if(m.find(prefix[i])!=m.end()){
+            ans+= m[prefix[i]];
+        }
+        m[prefix[i]]++;
+    }
+    c(ans);
     return 0;
 }

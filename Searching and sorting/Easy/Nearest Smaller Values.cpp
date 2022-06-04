@@ -17,24 +17,28 @@
 using namespace std;
 
 int main(){
+    
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int n;cin>>n;
-    vi v(n);
+    vector<int> v(n);
     for(int i=0;i<n;i++){
         cin>>v[i];
     }
-    sort(v.begin(),v.end());
-    lli toCheckFor=1;
-    for(int i=0;i<n;i++){
-        if(v[i]<= toCheckFor){
-            toCheckFor += v[i];
+    stack<int> stk;
+    stk.push(0);
+    z('0');
+    for(int i=1;i<n;i++){
+        while(!stk.empty() && v[stk.top()]>=v[i]){
+            stk.pop();
+        }
+        if(stk.empty()){
+            z('0');
         }
         else{
-            break;
+            z(stk.top() + 1);
         }
+        stk.push(i);
     }
-    cout<<toCheckFor<<endl;
-
     return 0;
 }

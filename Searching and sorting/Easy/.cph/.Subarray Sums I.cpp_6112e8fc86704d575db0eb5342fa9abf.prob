@@ -1,0 +1,1 @@
+{"name":"Local: Subarray Sums I","url":"c:\\C++\\Apna_College_DSA_SHEET\\Searching and sorting\\Easy\\Subarray Sums I.cpp","tests":[{"id":1654336146134,"input":"5 7\n2 -1 3 5 -2","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\C++\\Apna_College_DSA_SHEET\\Searching and sorting\\Easy\\Subarray Sums I.cpp","group":"local","local":true}

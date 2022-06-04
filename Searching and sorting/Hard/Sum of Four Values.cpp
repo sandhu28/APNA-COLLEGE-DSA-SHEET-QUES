@@ -17,24 +17,25 @@
 using namespace std;
 
 int main(){
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    int n;cin>>n;
-    vi v(n);
+    int n,x;cin>>n>>x;
+    vector<int> v(n);
     for(int i=0;i<n;i++){
-        cin>>v[i];
+        int x;cin>>x;
+        v[i]=x;
     }
-    sort(v.begin(),v.end());
-    lli toCheckFor=1;
+    map<int,pii> m;
     for(int i=0;i<n;i++){
-        if(v[i]<= toCheckFor){
-            toCheckFor += v[i];
+        for(int j=i+1;j<n;j++){
+            if(m.count(x-v[i]-v[j])){
+                z(i+1);z(j+1);z(m[x-v[i]-v[j]].first+1);c(m[x-v[i]-v[j]].second+1);
+                return 0;
+            }
         }
-        else{
-            break;
+        for(int j=0;j<i;j++){
+            m.insert({v[i]+v[j],{j,i}});
         }
     }
-    cout<<toCheckFor<<endl;
+    c("IMPOSSIBLE");
 
     return 0;
 }
