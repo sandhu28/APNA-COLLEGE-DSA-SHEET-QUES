@@ -55,7 +55,6 @@ int minimumEffortPath(vector<vector<int>>& heights) {
     }
     return (int)dist[r-1][c-1];
 }
-
 int main(){
 
     set<int> one= {1,2,3};
@@ -63,6 +62,6 @@ int main(){
     for(auto &p: two){
         c(p);
     }
-    
+
     return 0;
 }
