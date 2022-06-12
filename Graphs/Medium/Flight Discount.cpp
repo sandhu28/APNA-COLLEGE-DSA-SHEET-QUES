@@ -87,7 +87,7 @@ int main(){
         // v[y].push_back({x,w});
     }
     djikstra_1(v,n,couponNotUsed,couponUsed);
-    c(min(couponUsed[n],couponNotUsed[n]));
+    c(couponNotUsed[n]);
 
     return 0;
 }

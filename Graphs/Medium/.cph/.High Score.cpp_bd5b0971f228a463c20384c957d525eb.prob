@@ -1,0 +1,1 @@
+{"name":"Local: High Score","url":"c:\\C++\\Apna_College_DSA_SHEET\\Graphs\\Medium\\High Score.cpp","tests":[{"id":1654942146170,"input":"4 4\n1 4 1\n2 4 1\n2 3 1\n3 2 1\n","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\C++\\Apna_College_DSA_SHEET\\Graphs\\Medium\\High Score.cpp","group":"local","local":true}
