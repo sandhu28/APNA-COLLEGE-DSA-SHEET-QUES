@@ -28,39 +28,47 @@ int main()
         cin >> x >> y >> w;
         v[i] = {x, y, w};
     }
-    vlli dis(n + 1, INF);
-    vi par(n+1,-1);
-    dis[1] = 0;
-    for (int i = 1; i < n; i++)
+    for(int i=1;i<=n;i++){
+        v.push_back({0,i,0});
+    }
+    vlli dis(n + 1, 0);
+    vi par(n+1,0);
+    // dis[1] = 0;
+    int x ;
+    for (int i = 1; i <= n; i++)
     {
+        x= -1;
         for (auto &edge : v)
         {
             int a = edge[0], b = edge[1], w = edge[2];
-            par[b]=a;
-            if (dis[a] == INF)
-            {
-                continue;
-            }
             if (dis[a] + 1LL * w < dis[b])
             {
+                par[b]=a;
                 dis[b] = dis[a] + 1LL * w;
+                x= b;
             }
         }
     }
-    bool f=0;int st=0,en=0;
-    for (auto &edge : v)
-    {
-        int a = edge[0], b = edge[1], w = edge[2];
-        if (dis[a] + 1LL * w < dis[b])
-        {
-            st=a;en=b;
-            f=1;
-            break;
+    if(x==-1){
+        c("NO");
+    }
+    else{
+        c("YES");
+        for(int i=1;i<=n;i++){
+            x= par[x];
+        }
+        vi ans;
+        ans.push_back(x);
+        int temp=par[x];
+        while(temp!= x){
+            ans.push_back(temp);
+            temp= par[temp];
+        }
+        ans.push_back(x);
+        reverse(ans.begin(),ans.end());
+        for(auto &e: ans){
+            z(e);
         }
     }
-    if(f){
-        c("YES");
-    }
-    c(st);c(en);
     return 0;
 }

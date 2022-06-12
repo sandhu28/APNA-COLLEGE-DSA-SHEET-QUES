@@ -17,27 +17,27 @@
 using namespace std;
 
 // I tried to store parents along with weights in this problem but that's incorrect bz the shortest path using normal djikstra need be the shortest path after using coupon. eg; two path 100,100 and 10,200 here 100,100 is shortest but after coupon ans is 150 and in other case after coupon ans is 110. 
-void djikstra(vector<vpii> v,int n,vlli &dis,vi &vis,vpii &par){
-    set<pair<lli,int>> s;// dist, vertex
-    s.insert({0,1});
-    dis[1] =0;
-    while(!s.empty()){
-        auto pr= *s.begin();
-        s.erase(s.begin());
-        int currVer= pr.second;
-        if(vis[currVer]==1){continue;}
-        for(auto &child: v[currVer]){
-            int childVer= child.first;
-            int w = child.second;
-            if(dis[currVer] + 1LL*w < dis[childVer]){
-                dis[childVer] = dis[currVer] + 1LL*w;
-                par[childVer] = {currVer,w};
-                s.insert({dis[childVer],childVer});
-            }
-        }
-        vis[currVer] =1;
-    }
-}
+// void djikstra(vector<vpii> v,int n,vlli &dis,vi &vis,vpii &par){
+//     set<pair<lli,int>> s;// dist, vertex
+//     s.insert({0,1});
+//     dis[1] =0;
+//     while(!s.empty()){
+//         auto pr= *s.begin();
+//         s.erase(s.begin());
+//         int currVer= pr.second;
+//         if(vis[currVer]==1){continue;}
+//         for(auto &child: v[currVer]){
+//             int childVer= child.first;
+//             int w = child.second;
+//             if(dis[currVer] + 1LL*w < dis[childVer]){
+//                 dis[childVer] = dis[currVer] + 1LL*w;
+//                 par[childVer] = {currVer,w};
+//                 s.insert({dis[childVer],childVer});
+//             }
+//         }
+//         vis[currVer] =1;
+//     }
+// }
 
 void djikstra_1(vector<vpii> v,int n,vlli &couponUsed, vlli &couponNotUsed){
     set<pair<pair<lli,int>,bool>> s;// dist, vertex
@@ -51,6 +51,12 @@ void djikstra_1(vector<vpii> v,int n,vlli &couponUsed, vlli &couponNotUsed){
         bool flag= pr.second;
         lli currCost= pr.first.first;
         // if(vis[currVer]==1){continue;}
+        if(flag==1){
+            if(couponUsed[currVer] < currCost ){continue;}
+        }
+        if(flag==0){
+            if(couponNotUsed[currVer] < currCost){continue;}
+        }
         for(auto &child: v[currVer]){
             int childVer= child.first;
             int w = child.second;

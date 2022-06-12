@@ -16,6 +16,11 @@
 #define INF INT_MAX
 using namespace std;
 
+// ques given two arr A, B of max size 1e5
+// We create an array C of size |A| * |B| 
+// containing or or each pair of A and B 
+// Now we take Xor of all values of arr
+// C find the resultant
 bool Set(int num ,int pos){
     return (num)&(1<<pos);
 }
