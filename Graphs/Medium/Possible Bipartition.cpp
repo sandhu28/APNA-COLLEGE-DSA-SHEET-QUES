@@ -21,6 +21,46 @@ using namespace std;
 const int M = 1e9 + 7;
 const int N = 1e5+ 3;
 
+bool bfs(vvi &g,vi &lev,vi &vis){
+
+    queue<pii> q;
+    q.push({1,0});
+    vis[1]=1;
+    lev[1]=0;
+    while(!q.empty()){
+        int ver= q.front().first;
+        int curr_lev= q.front().second;
+        q.pop();
+        for(auto &child: g[ver]){
+            if(vis[child]==1 && (lev[child]==lev[ver])){
+                return 0;
+            }
+            else if(vis[child]==1){
+                continue;
+            }
+            else{
+                q.push({child,curr_lev^1});
+                vis[child]=1;
+                lev[child]= curr_lev^1;
+            }
+        }
+    }
+    return 1;
+}
+
+bool possibleBipartition(int n, vector<vector<int>>& dislikes) {
+    vvi g(n+1);
+    for(int i=0;i<dislikes.size();i++){
+        int x= dislikes[i][0],y= dislikes[i][1];
+        g[x].push_back(y);
+        g[y].push_back(x);
+    }
+    vi lev(n+1,-1);
+    vi vis(n+1,0);
+    return bfs(g,lev,vis);
+
+}
+
 int main(){
     
     return 0;
