@@ -21,38 +21,30 @@ using namespace std;
 const int M = 1e9 + 7;
 const int N = 1e5+ 3;
 
-int dfs(int n,int val,vi &ct,int sz){
-    if(sz==0){
-        for(int i=1;i<=9;i++){
-            if((ct[i]!=i)  && (ct[i]!=0)){
-                return 0;
-            }
-        }
-        return val>n? val: 0;
+int dfs(int i,int n,vlli &sz,vvi &tree){
+    lli pro=1;int sm=1;
+    for(auto &child: tree[i]){
+        int cnt= dfs(child,n,sz,tree);
+        pro *= cnt;
+        sm+= cnt;
     }
-    int res=0;
-    for(int i=1;(res>0) && i<=9;i++){
-        if(ct[i]>0 && ct[i]<= sz){
-            --ct[i];
-            res= dfs(n,val*10 + i,ct,sz-1);
-            ++ct[i];
-        }
-    }
-    return res;
+    sz[i] = pro*(max(1LL, (long long)(n- sm -1)));
+    return i!=0? sm: count(all(sz),*max_element(all(sz)));
 }
 
-int nextBeautifulNumber(int n) {
-    vi ct(10,0);
-    for(int i=0;i<=9;i++){
-        ct[i] =i;
+int countHighestScoreNodes(vector<int>& p) {
+    int n= p.size();
+    vvi tree(n);
+    vlli sz(n);
+    for(int i=1;i<n;i++){
+        tree[p[i]].push_back(i);
     }
-    string s= to_string(n);
-    int sz= s.size();
-    return dfs(n,0,ct,sz)?: dfs(n,0,ct,sz);
-
+    return dfs(0,n,sz,tree);
 }
 
 int main(){
     
     return 0;
 }
+
+
