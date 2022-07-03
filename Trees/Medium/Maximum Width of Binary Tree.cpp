@@ -30,36 +30,38 @@ struct TreeNode {
     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
 
-int findIdx(int val,vi &post,int st,int en){
-    for(int i=st;i<=en;i++){
-        if(post[i]==val){
-            return i;
+int widthOfBinaryTree(TreeNode* root) {
+    queue<TreeNode*> q;
+    map<TreeNode*,lli> m;
+    lli ans=INT_MIN;
+    lli curr=1;
+    q.push(root);
+    m[root]=1;
+    while(!q.empty()){
+        int sz= q.size();
+        lli st=0,en=0;
+        for(int i=0;i<sz;i++){
+            auto node= q.front();
+            q.pop();
+            if(i==0){
+                st= m[node];
+            }
+            if(i==sz-1){
+                en= m[node];
+            }
+            if(node->left){
+                q.push(node->left);
+                m[node->left] = 2*1LL*m[node];
+            }
+            if(node->right){
+                q.push(node->right);
+                m[node->right] = 2*1LL*m[node] + 1LL*1;
+            }
         }
+        curr= (en*1LL-1LL*st+ 1LL*1);
+        ans= max(curr,ans);
     }
-    return -1;
-}
-
-TreeNode* treePostPre(vi &pre,vi &post,int preSt,int preEn, int postST,int postEn){
-    if(preSt > preEn){
-        return NULL;
-    }
-    if(preSt== preEn){
-        return new TreeNode(pre[preSt]);
-    }
-    TreeNode* root= new TreeNode(pre[preSt]);
-    int leftSubStPre= preSt + 1;
-    int leftSubEnPost= findIdx(pre[leftSubStPre],post,postST,postEn);
-    int leftSubEnPre = leftSubStPre + (leftSubEnPost - postST);
-
-    root->left= treePostPre(pre,post,leftSubStPre,leftSubEnPre,postST,leftSubEnPost);
-    root->right= treePostPre(pre,post,leftSubEnPre+1,preEn,leftSubEnPost+ 1, postEn-1);
-    return root;
-
-}
-
-TreeNode* constructFromPrePost(vector<int>& pre, vector<int>& post) {
-
-    return treePostPre(pre,post,0,pre.size()-1,0,pre.size()-1);
+    return (int)ans;
 }
 
 int main(){
