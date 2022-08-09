@@ -27,43 +27,27 @@ using namespace std;
 const int M = 1e9 + 7;
 const int N = 1e5+ 3;
 
-int longestSubstring(string s, int k) {
-
-    int n= s.size();
-    int ans= INT_MIN;
-    for(int uniq= 1;uniq<=26;uniq++){
-        vi ct(26,0);
-        int i=0,j=0;
-        int uqTillNow=0;int ctK=0;
-        while(j<n){
-            if(uqTillNow<= uniq){
-                if(ct[s[j]-'a']==0){
-                    uqTillNow++;
-                }
-                ct[s[j]-'a']++;
-                if(ct[s[j]-'a']==k){
-                    ctK++;
-                }
-            }
-            else{
-                if(ct[s[i]-'a']==k){
-                    ctK--;
-                }
-                ct[s[i]-'a']--;
-                if(ct[s[i]-'a']==0){
-                    uqTillNow--;
-                }
-            }
-            if(uqTillNow== uniq && ctK== uniq){
-                ans= max(ans,j-i);
-            }
+int a_to_b(int a,int b){
+    int ans=1;
+    while(b>0){
+        if(b&1){
+            ans=( ans*1LL*(a))%M;
         }
+        b>>= 1;
+        a= (a*1LL*a)%M;
     }
     return ans;
-
 }
 
 int main(){
     
+    fast_io;
+    int n;
+    cin>>n;
+    while(n--){
+        int a,b;
+        cin>>a>>b;
+        c(a_to_b(a,b));
+    }
     return 0;
 }

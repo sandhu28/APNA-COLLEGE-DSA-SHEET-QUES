@@ -27,41 +27,35 @@ using namespace std;
 const int M = 1e9 + 7;
 const int N = 1e5+ 3;
 
-int longestSubstring(string s, int k) {
-
-    int n= s.size();
-    int ans= INT_MIN;
-    for(int uniq= 1;uniq<=26;uniq++){
-        vi ct(26,0);
-        int i=0,j=0;
-        int uqTillNow=0;int ctK=0;
-        while(j<n){
-            if(uqTillNow<= uniq){
-                if(ct[s[j]-'a']==0){
-                    uqTillNow++;
-                }
-                ct[s[j]-'a']++;
-                if(ct[s[j]-'a']==k){
-                    ctK++;
-                }
-            }
-            else{
-                if(ct[s[i]-'a']==k){
-                    ctK--;
-                }
-                ct[s[i]-'a']--;
-                if(ct[s[i]-'a']==0){
-                    uqTillNow--;
-                }
-            }
-            if(uqTillNow== uniq && ctK== uniq){
-                ans= max(ans,j-i);
-            }
+vector<vector<int>> mergeSimilarItems(vector<vector<int>>& items1, vector<vector<int>>& items2) {
+    vvi ans;
+    int n= items1.size();
+    int m= items2.size();
+    vi arr(1003,0);
+    vi arr2(1003,0);
+    fo(i,m){
+        arr[items2[i][0]]= items2[i][1];
+        arr2[items1[i][0]]= items1[i][1];
+    }
+    fo(i,n){
+        vi temp(2,0);
+        int val= items1[i][0];
+        temp[0]= val;
+        temp[1] = items1[i][1] + arr[val];
+        ans.push_back(temp);
+    }
+    fo(i,m){
+        if(arr[items2[i][0]]==0){
+            vi temp= {items2[i][0],items2[i][1]};
+            ans.push_back(temp);
         }
     }
+    sort(all(ans));
     return ans;
 
 }
+
+
 
 int main(){
     

@@ -27,40 +27,31 @@ using namespace std;
 const int M = 1e9 + 7;
 const int N = 1e5+ 3;
 
-int longestSubstring(string s, int k) {
-
-    int n= s.size();
-    int ans= INT_MIN;
-    for(int uniq= 1;uniq<=26;uniq++){
-        vi ct(26,0);
-        int i=0,j=0;
-        int uqTillNow=0;int ctK=0;
-        while(j<n){
-            if(uqTillNow<= uniq){
-                if(ct[s[j]-'a']==0){
-                    uqTillNow++;
-                }
-                ct[s[j]-'a']++;
-                if(ct[s[j]-'a']==k){
-                    ctK++;
-                }
+long long taskSchedulerII(vector<int>& tasks, int space) {
+    lli days=0;
+    map<int,lli > m;
+    int n= tasks.size();
+    int i=0;
+    while(i<n){
+        if(m.find(tasks[i])!= m.end()){
+            if(days-m[tasks[i]]>= space+1){
+                m[tasks[i]]= days;
+                days++;
             }
             else{
-                if(ct[s[i]-'a']==k){
-                    ctK--;
-                }
-                ct[s[i]-'a']--;
-                if(ct[s[i]-'a']==0){
-                    uqTillNow--;
-                }
+                days+= (space*1LL +1 - (days- m[tasks[i]]));
+                m[tasks[i]]= days;
+                days++;
             }
-            if(uqTillNow== uniq && ctK== uniq){
-                ans= max(ans,j-i);
-            }
+            
         }
+        else{
+            m[tasks[i]]= days;
+            days++;
+        }
+        i++;
     }
-    return ans;
-
+    return days;
 }
 
 int main(){

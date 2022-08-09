@@ -27,41 +27,27 @@ using namespace std;
 const int M = 1e9 + 7;
 const int N = 1e5+ 3;
 
-int longestSubstring(string s, int k) {
-
-    int n= s.size();
-    int ans= INT_MIN;
-    for(int uniq= 1;uniq<=26;uniq++){
-        vi ct(26,0);
-        int i=0,j=0;
-        int uqTillNow=0;int ctK=0;
-        while(j<n){
-            if(uqTillNow<= uniq){
-                if(ct[s[j]-'a']==0){
-                    uqTillNow++;
+int longestIdealString(string s, int k) {
+        vector<int> mx(26,0);
+        mx[s[0]-'a']= 1;
+        int n= s.size();
+        int ans= 1;
+        for(int i=1;i<n;i++){
+            int curr= s[i]-'a';
+            int temp= 1;
+            for(int j=0;j<26;j++){
+                if(mx[j]==0){
+                    continue;
                 }
-                ct[s[j]-'a']++;
-                if(ct[s[j]-'a']==k){
-                    ctK++;
-                }
+                if(abs(curr-j)<=k){
+                    temp= max(temp,mx[j]+1);  
+                }   
             }
-            else{
-                if(ct[s[i]-'a']==k){
-                    ctK--;
-                }
-                ct[s[i]-'a']--;
-                if(ct[s[i]-'a']==0){
-                    uqTillNow--;
-                }
-            }
-            if(uqTillNow== uniq && ctK== uniq){
-                ans= max(ans,j-i);
-            }
+            mx[curr]= temp;
+            ans= max(ans,temp);
         }
+        return ans;
     }
-    return ans;
-
-}
 
 int main(){
     

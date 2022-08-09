@@ -27,40 +27,35 @@ using namespace std;
 const int M = 1e9 + 7;
 const int N = 1e5+ 3;
 
-int longestSubstring(string s, int k) {
-
-    int n= s.size();
-    int ans= INT_MIN;
-    for(int uniq= 1;uniq<=26;uniq++){
-        vi ct(26,0);
-        int i=0,j=0;
-        int uqTillNow=0;int ctK=0;
-        while(j<n){
-            if(uqTillNow<= uniq){
-                if(ct[s[j]-'a']==0){
-                    uqTillNow++;
-                }
-                ct[s[j]-'a']++;
-                if(ct[s[j]-'a']==k){
-                    ctK++;
-                }
-            }
-            else{
-                if(ct[s[i]-'a']==k){
-                    ctK--;
-                }
-                ct[s[i]-'a']--;
-                if(ct[s[i]-'a']==0){
-                    uqTillNow--;
-                }
-            }
-            if(uqTillNow== uniq && ctK== uniq){
-                ans= max(ans,j-i);
-            }
-        }
+void dfs(int &ans,int i,vvi &g,vi &res,int par){
+    if(res[i]){
+        return;
     }
+    ans++;
+    for(auto &child: g[i]){
+        if(child== par){
+            continue;
+        }
+        dfs(ans,child,g,res,par);
+    }
+}
+
+int reachableNodes(int n, vector<vector<int>>& e, vector<int>& res) {    
+    vvi g(n);
+    for(int i=0;i<n-1;i++){
+        g[e[i][0]].push_back(e[i][1]);
+        g[e[i][1]].push_back(e[i][0]); 
+    }
+    int N= 1e5+2;
+    vi r(N,0);
+    for(int i=0;i<res.size();i++){
+        r[res[i]]=1;
+    }
+    int ans=0;
+    dfs(ans,0,g,r,-1);
     return ans;
 
+        
 }
 
 int main(){
