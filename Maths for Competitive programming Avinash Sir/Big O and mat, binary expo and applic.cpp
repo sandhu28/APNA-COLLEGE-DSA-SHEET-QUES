@@ -123,6 +123,18 @@ vvi matrix_expo(vvi &a,int b){
     return matrixMul(x,x);
 }
 
+vvi matrix_expo_recur(vvi &a,int b){
+    vvi ans=identity(a);
+    while(b>0){
+        if(b&1){
+            ans= matrixMul(ans,a);
+        }
+        b>>=1;
+        a= matrixMul(a,a);
+    }
+    return ans;
+}
+
 // 2. Linear transformations 
 // x,y -> (x+y,2*y-x) let's say we keep on doing this transformation say 100 times what would final points??
 // this can be a 2*2 matrix being mul by 2*1 matrix [[1,1],[-1,2]]*[[x],[y]]==== A*X
